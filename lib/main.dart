@@ -1,65 +1,94 @@
-import 'package:flutter/material.dart';
-import 'ShoppiingListItem.dart';
+import "package:flutter/material.dart";
 
-class ShoppingList extends StatefulWidget {
-  ShoppingList({Key key, this.products}) : super(key: key);
-
-  final List<Product> products;
-
-  // The framework calls createState the first time a widget appears at a given
-  // location in the tree. If the parent rebuilds and uses the same type of
-  // widget (with the same key), the framework will re-use the State object
-  // instead of creating a new State object.
-
+class BasicAppBarSample extends StatefulWidget {
   @override
-  _ShoppingListState createState() => new _ShoppingListState();
+  _BasicAppBarSampleState createState() => new _BasicAppBarSampleState();
 }
 
-class _ShoppingListState extends State<ShoppingList> {
-  Set<Product> _shoppingCart = new Set<Product>();
+class _BasicAppBarSampleState extends State<BasicAppBarSample> {
+  Choice _selectedChoice = choices[3];
 
-  void _handleCartChanged(Product product, bool inCart) {
+  void _selcet(Choice choice) {
     setState(() {
-      // When user changes what is in the cart, we need to change _shoppingCart
-      // inside a setState call to trigger a rebuild. The framework then calls
-      // build, below, which updates the visual appearance of the app.
-
-      if (inCart)
-        _shoppingCart.add(product);
-      else
-        _shoppingCart.remove(product);
+      _selectedChoice = choice;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return new MaterialApp(
+        home: new Scaffold(
       appBar: new AppBar(
-        title: new Text('Shopping List'),
+        title: new Text("todo"),
+        actions: <Widget>[
+          new IconButton(
+              icon: new Icon(choices[0].icon),
+              onPressed: () {
+                _selcet(choices[0]);
+              }),
+          new IconButton(
+              icon: new Icon(choices[1].icon),
+              onPressed: () {
+                _selcet(choices[1]);
+              }),
+          new PopupMenuButton<Choice>(
+            onSelected: _selcet,
+            itemBuilder: (BuildContext context) {
+              return choices.map((Choice choice) {
+                return new PopupMenuItem(
+                    value: choice, child: new Text(choice.title));
+              }).toList();
+            },
+          )
+        ],
       ),
-      body: new ListView(
-        padding: new EdgeInsets.symmetric(vertical: 8.0),
-        children: widget.products.map((Product product) {
-          return new ShoppingListItem(
-            product: product,
-            inCart: _shoppingCart.contains(product),
-            onCartChange: _handleCartChanged,
-          );
-        }).toList(),
+      body: new Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: new ChoiceCard(choice: _selectedChoice),
+      ),
+    ));
+  }
+}
+
+class Choice {
+  const Choice({this.title, this.icon});
+  final String title;
+  final IconData icon;
+}
+
+const List<Choice> choices = const <Choice>[
+  const Choice(title: 'Car', icon: Icons.directions_car),
+  const Choice(title: 'Bicycle', icon: Icons.directions_bike),
+  const Choice(title: 'Boat', icon: Icons.directions_boat),
+  const Choice(title: 'Bus', icon: Icons.directions_bus),
+  const Choice(title: 'Train', icon: Icons.directions_railway),
+  const Choice(title: 'Walk', icon: Icons.directions_walk),
+];
+
+class ChoiceCard extends StatelessWidget {
+  const ChoiceCard({Key key, this.choice}) : super(key: key);
+
+  final Choice choice;
+
+  @override
+  Widget build(BuildContext context) {
+    final TextStyle textStyle = Theme.of(context).textTheme.display1;
+    return new Card(
+      color: Colors.white,
+      child: new Center(
+        child: new Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            new Icon(choice.icon, size: 128, color: textStyle.color),
+            new Text(choice.title, style: textStyle),
+          ],
+        ),
       ),
     );
   }
 }
 
 void main() {
-  runApp(new MaterialApp(
-    title: 'Shopping App',
-    home: new ShoppingList(
-      products: <Product>[
-        new Product(name: 'Eggs'),
-        new Product(name: 'Flour'),
-        new Product(name: 'Chocolate chips'),
-      ],
-    ),
-  ));
+  runApp(new BasicAppBarSample());
 }
