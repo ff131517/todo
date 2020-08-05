@@ -6,7 +6,7 @@ class BasicAppBarSample extends StatefulWidget {
 }
 
 class _BasicAppBarSampleState extends State<BasicAppBarSample> {
-  Choice _selectedChoice = choices[3];
+  Choice _selectedChoice = choices[1];
 
   void _selcet(Choice choice) {
     setState(() {
@@ -14,12 +14,26 @@ class _BasicAppBarSampleState extends State<BasicAppBarSample> {
     });
   }
 
+  void _appsBtnClick() {
+    print("apps click");
+  }
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
         home: new Scaffold(
       appBar: new AppBar(
-        title: new Text("todo"),
+        title: new Row(
+          children: <Widget>[
+            new IconButton(
+                icon: new Icon(
+                  Icons.apps,
+                  color: Colors.white,
+                ),
+                onPressed: _appsBtnClick),
+            new Text("To Do")
+          ],
+        ),
         actions: <Widget>[
           new IconButton(
               icon: new Icon(choices[0].icon),
@@ -31,15 +45,6 @@ class _BasicAppBarSampleState extends State<BasicAppBarSample> {
               onPressed: () {
                 _selcet(choices[1]);
               }),
-          new PopupMenuButton<Choice>(
-            onSelected: _selcet,
-            itemBuilder: (BuildContext context) {
-              return choices.map((Choice choice) {
-                return new PopupMenuItem(
-                    value: choice, child: new Text(choice.title));
-              }).toList();
-            },
-          )
         ],
       ),
       body: new Padding(
@@ -57,13 +62,15 @@ class Choice {
 }
 
 const List<Choice> choices = const <Choice>[
-  const Choice(title: 'Car', icon: Icons.directions_car),
-  const Choice(title: 'Bicycle', icon: Icons.directions_bike),
-  const Choice(title: 'Boat', icon: Icons.directions_boat),
-  const Choice(title: 'Bus', icon: Icons.directions_bus),
-  const Choice(title: 'Train', icon: Icons.directions_railway),
-  const Choice(title: 'Walk', icon: Icons.directions_walk),
+  const Choice(title: 'Car', icon: AntdIcons.checkCircle),
+  // const Choice(title: 'Car', icon: Icons.settings),
+  const Choice(title: 'Bicycle', icon: Icons.question_answer),
 ];
+
+class AntdIcons {
+  static const IconData setting = IconData(0xe64e, fontFamily: 'AntdIcons');
+  static const IconData checkCircle = IconData(0xe77d, fontFamily: 'AntdIcons');
+}
 
 class ChoiceCard extends StatelessWidget {
   const ChoiceCard({Key key, this.choice}) : super(key: key);
