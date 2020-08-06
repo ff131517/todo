@@ -87,7 +87,7 @@ class ChoiceCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            new Icon(choice.icon, size: 128, color: textStyle.color),
+            new Icon(AntdIcons.checkCircle, size: 128, color: textStyle.color),
             new Text(choice.title, style: textStyle),
           ],
         ),
