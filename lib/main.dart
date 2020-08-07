@@ -62,14 +62,13 @@ class Choice {
 }
 
 const List<Choice> choices = const <Choice>[
-  const Choice(title: 'Car', icon: AntdIcons.checkCircle),
+  const Choice(title: 'Car', icon: AntdIcons.setting),
   // const Choice(title: 'Car', icon: Icons.settings),
   const Choice(title: 'Bicycle', icon: Icons.question_answer),
 ];
 
 class AntdIcons {
-  static const IconData setting = IconData(0xe64e, fontFamily: 'AntdIcons');
-  static const IconData checkCircle = IconData(0xe77d, fontFamily: 'AntdIcons');
+  static const IconData setting = IconData(0xe77d, fontFamily: 'Custome');
 }
 
 class ChoiceCard extends StatelessWidget {
@@ -87,7 +86,7 @@ class ChoiceCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            new Icon(AntdIcons.checkCircle, size: 128, color: textStyle.color),
+            new Icon(AntdIcons.setting, size: 128, color: textStyle.color),
             new Text(choice.title, style: textStyle),
           ],
         ),
