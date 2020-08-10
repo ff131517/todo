@@ -31,24 +31,42 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-    Column  buildButtonColumn (IconData icon ,String label){
-      Color color  = Theme.of(context).primaryColor;
+    Column buildButtonColumn(IconData icon, String label) {
+      Color color = Theme.of(context).primaryColor;
 
       return new Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          new Icon(icon,color: color,)
-        ],
-      )
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new Icon(
+              icon,
+              color: color,
+            ),
+            new Container(
+              margin: const EdgeInsets.only(top: 8.0),
+              child: new Text(label,
+                  style: new TextStyle(
+                      color: color,
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w400)),
+            )
+          ]);
     }
-    return  new MaterialApp(
-      title:"Layout Demo",
-      theme: new ThemeData(
-        primaryColor: Colors.blue //设置主题颜色
-      )
-    );
-  }
-  
-}
 
+    Widget buttonSection = new Container(
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          buildButtonColumn(Icons.call, "Call"),
+          buildButtonColumn(Icons.near_me, "Route"),
+          buildButtonColumn(Icons.share, "Share"),
+        ],
+      ),
+    );
+
+    return new MaterialApp(
+        title: "Layout Demo",
+        theme: new ThemeData(primaryColor: Colors.blue //设置主题颜色
+            ));
+  }
+}
