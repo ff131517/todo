@@ -30,5 +30,25 @@ class MyApp extends StatelessWidget {
         ],
       ),
     );
+
+    Column  buildButtonColumn (IconData icon ,String label){
+      Color color  = Theme.of(context).primaryColor;
+
+      return new Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new Icon(icon,color: color,)
+        ],
+      )
+    }
+    return  new MaterialApp(
+      title:"Layout Demo",
+      theme: new ThemeData(
+        primaryColor: Colors.blue //设置主题颜色
+      )
+    );
   }
+  
 }
+
